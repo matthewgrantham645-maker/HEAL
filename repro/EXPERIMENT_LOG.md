@@ -46,3 +46,31 @@ Observed training-step GPU memory:
 - batch=4, 8 agents: 9.55 GB allocated / 10.78 GB reserved
 
 Therefore the current 8 GB laptop GPU cannot safely run the official batch-size configuration.
+
+## 2026-09-07 — Stage 1 30-Epoch Hardware-Adapted Run
+
+### Purpose
+Complete HEAL Stage 1 training and evaluation on OPV2V using the laptop-compatible batch-size configuration.
+
+### Configuration
+- Base config: `m1_pyramid.yaml`
+- Adapted config: `m1_pyramid_rtx5070_b1.yaml`
+- Physical batch size: 1
+- Epochs: 30
+- Other major training settings unchanged
+
+### Results
+- AP@0.3: 0.95
+- AP@0.5: 0.94
+- AP@0.7: 0.90
+
+### Output
+`opencood/logs/Pyramid_m1_base_rtx5070_b1_2026_09_06_16_18_16`
+
+### Status
+- Full 30-epoch hardware-adapted training: PASS
+- End-to-end train / validation / checkpoint / test inference pipeline: PASS
+- Strict official baseline reproduction: NO
+
+### Note
+The official HEAL Stage 1 configuration uses physical batch size 4. This run uses physical batch size 1 because of the 7.96 GB VRAM constraint on the RTX 5070 Laptop GPU. Therefore, the reported AP values should be treated as results of the hardware-adapted reproduction rather than as the strict official batch-size baseline.
